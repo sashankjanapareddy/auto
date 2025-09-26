@@ -1,93 +1,609 @@
 <html>
   <body>
-    import React, { useEffect, useState } from "react";
-</motion.div>
-)}
-</AnimatePresence>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vintage Camera Museum</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f5f2;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #e67e22;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: #e67e22;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                         url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80') no-repeat center/cover;
+            height: 100vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #e67e22;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #d35400;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Gallery Section */
+        .gallery {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #e67e22;
+            margin: 15px auto;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background-color: transparent;
+            border: 2px solid #2c3e50;
+            padding: 8px 20px;
+            margin: 5px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #2c3e50;
+            color: white;
+        }
+        
+        .camera-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .camera-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .camera-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .camera-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .camera-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .camera-card:hover .camera-image img {
+            transform: scale(1.1);
+        }
+        
+        .camera-info {
+            padding: 20px;
+        }
+        
+        .camera-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .camera-info p {
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .camera-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        /* About Section */
+        .about {
+            background-color: #2c3e50;
+            color: white;
+            padding: 80px 0;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .about-image img {
+            width: 100%;
+            display: block;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+        }
+        
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            min-width: 200px;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .contact-item i {
+            font-size: 2rem;
+            color: #e67e22;
+            margin-bottom: 15px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-icons {
+            margin: 20px 0;
+        }
+        
+        .social-icons a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: #e67e22;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .filter-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-btn {
+                width: 200px;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-camera"></i>
+                    Vintage Lens
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#gallery">Collection</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Visit Us</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
 
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Step into the World of Vintage Cameras</h1>
+                <p>Discover the artistry and engineering behind photography's most iconic tools at our exclusive museum exhibit</p>
+                <a href="#gallery" class="btn">Explore Collection</a>
+            </div>
+        </div>
+    </section>
 
-</div>
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <h2 class="section-title">Camera Collection</h2>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="35mm">35mm</button>
+                <button class="filter-btn" data-filter="medium-format">Medium Format</button>
+                <button class="filter-btn" data-filter="twin-lens">Twin Lens</button>
+                <button class="filter-btn" data-filter="rangefinder">Rangefinder</button>
+            </div>
+            
+            <div class="camera-grid">
+                <div class="camera-card" data-category="35mm">
+                    <div class="camera-image">
+                        <img src="https://images.unsplash.com/photo-1516724562728-afc824a36e84?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Vintage Leica film camera with leather case and brass details">
+                    </div>
+                    <div class="camera-info">
+                        <h3>Leica M3</h3>
+                        <p>A legendary 35mm rangefinder camera introduced in 1954, renowned for its precision and craftsmanship.</p>
+                        <div class="camera-meta">
+                            <span>1954</span>
+                            <span>Germany</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="camera-card" data-category="medium-format">
+                    <div class="camera-image">
+                        <img src="https://images.unsplash.com/photo-1566277294186-57bcef799551?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Hasselblad medium format camera with chrome finish and wooden grip">
+                    </div>
+                    <div class="camera-info">
+                        <h3>Hasselblad 500C</h3>
+                        <p>The iconic medium format SLR famous for its modular system and used by NASA during Apollo missions.</p>
+                        <div class="camera-meta">
+                            <span>1957</span>
+                            <span>Sweden</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="camera-card" data-category="twin-lens">
+                    <div class="camera-image">
+                        <img src="https://images.unsplash.com/photo-1580310001185-crop&w=600&q=80" alt="Rolleiflex twin lens reflex camera with leather body and folded handle">
+                    </div>
+                    <div class="camera-info">
+                        <h3>Rolleiflex 2.8F</h3>
+                        <p>A premium twin-lens reflex camera known for its exceptional lens quality and waist-level viewing system.</p>
+                        <div class="camera-meta">
+                            <span>1960</span>
+                            <span>Germany</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="camera-card" data-category="35mm">
+                    <div class="camera-image">
+                        <img src="https://images.unsplash.com/photo-1597403315720-3e1b289689cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Nikon F 35mm SLR camera with standard lens attached">
+                    </div>
+                    <div class="camera-info">
+                        <h3>Nikon F</h3>
+                        <p>The first professional-grade 35mm SLR system camera that set the standard for decades of photography.</p>
+                        <div class="camera-meta">
+                            <span>1959</span>
+                            <span>Japan</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="camera-card" data-category="rangefinder">
+                    <div class="camera-image">
+                        <img src="https://images.unsplash.com/photo-1606985444525-4c06b8fa367b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Canon rangefinder camera with leather case and chrome accents">
+                    </div>
+                    <div class="camera-info">
+                        <h3>Canon P</h3>
+                        <p>A beautifully designed 35mm rangefinder known for its clean lines and reliable performance.</p>
+                        <div class="camera-meta">
+                            <span>1959</span>
+                            <span>Japan</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="camera-card" data-category="medium-format">
+                    <div class="camera-image">
+                        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Mamiya medium format camera on a wooden table with vintage feel">
+                    </div>
+                    <div class="camera-info">
+                        <h3>Mamiya C330</h3>
+                        <p>A professional twin-lens reflex system with interchangeable lenses and bellows focusing.</p>
+                        <div class="camera-meta">
+                            <span>1969</span>
+                            <span>Japan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About Our Museum</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Founded in 1985, the Vintage Lens Museum is dedicated to preserving the history and artistry of photography through its most important tool: the camera.</p>
+                    <p>Our collection features over 200 cameras from the late 19th century to the 1970s, tracing the evolution of photographic technology and its impact on visual storytelling.</p>
+                    <p>Each camera in our collection has been meticulously restored to functional condition, with many still capable of capturing images today just as they did decades ago.</p>
+                    <a href="#contact" class="btn">Plan Your Visit</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Museum interior display of vintage cameras in glass cases">
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div className="mt-4 w-full flex items-center justify-between">
-<div>
-<div className="text-sm">Growth: <span className="font-semibold">{growth}%</span></div>
-<div className="text-xs text-gray-500">Level {level} / 5</div>
-</div>
-<div className="flex gap-2">
-<button onClick={water} className="px-4 py-2 rounded-lg bg-sky-600 text-white">Water</button>
-<button onClick={() => setGrowth((g)=>Math.min(100,g+1))} className="px-3 py-2 rounded-lg border">+1</button>
-<button onClick={() => setGrowth((g)=>Math.max(0,g-5))} className="px-3 py-2 rounded-lg border">-5</button>
-</div>
-</div>
-</div>
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Visit Us</h2>
+            <div class="contact-content">
+                <p>We're located in the heart of the historic district, easily accessible by public transportation with ample parking nearby.</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Address</h3>
+                        <p>123 Photography Lane<br>Camera City, CC 12345</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <h3>Hours</h3>
+                        <p>Tuesday-Sunday<br>10:00 AM - 6:00 PM</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-ticket-alt"></i>
+                        <h3>Admission</h3>
+                        <p>Adults: $15<br>Students: $10</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <i class="fas fa-camera"></i>
+                    Vintage Lens
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <p>© 2023 Vintage Lens Museum. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-{/* Right: journal + actions */}
-<div className="w-1/2">
-<form onSubmit={addEntry} className="flex flex-col gap-3 mb-3">
-<textarea value={note} onChange={(e)=>setNote(e.target.value)} placeholder="Write a tiny note... (1-2 lines)" className="w-full p-3 rounded-md border resize-none h-24 bg-white/60" />
-<div className="flex items-center gap-3">
-<label className="text-sm">Mood</label>
-<input type="range" min="1" max="5" value={mood} onChange={(e)=>setMood(Number(e.target.value))} />
-<div className="px-3 py-1 rounded-md border">{['😕','😐','🙂','😄','🤩'][mood-1]}</div>
-<button type="submit" className="ml-auto px-4 py-2 rounded-lg bg-emerald-600 text-white">Plant Note</button>
-</div>
-</form>
-
-
-<div className="overflow-y-auto max-h-56 bg-white/30 rounded-md p-2 border">
-{entries.length===0 ? (
-<div className="text-sm text-gray-500">No entries yet — your garden patiently waits.</div>
-) : (
-entries.map(en => (
-<div key={en.id} className="p-2 border-b last:border-b-0">
-<div className="text-xs text-gray-400">{new Date(en.date).toLocaleString()}</div>
-<div className="flex items-center justify-between">
-<div className="text-sm">{en.text}</div>
-<div className="text-xs px-2 py-1 rounded-md bg-white/30">+{en.delta}</div>
-</div>
-</div>
-))
-)}
-</div>
-
-
-<div className="mt-3 text-xs text-gray-500">Tip: small consistent actions help the garden — plant 1-2 short notes each day.</div>
-</div>
-</div>
-
-
-{/* decorative bottom */}
-<div className="absolute bottom-3 left-6 text-xs opacity-60">MoodGarden • Local only • No account needed</div>
-</div>
-</div>
-
-
-{/* Right column: stats / quick actions */}
-<div className="col-span-1 bg-white/80 dark:bg-gray-900/70 rounded-2xl p-4 shadow-lg">
-<h3 className="font-semibold mb-2">Quick Stats</h3>
-<div className="text-sm">Entries: <span className="font-medium">{entries.length}</span></div>
-<div className="text-sm">Last action: <span className="font-medium">{entries[0]?.date ? new Date(entries[0].date).toLocaleString() : '—'}</span></div>
-<div className="mt-4">
-<h4 className="text-sm font-medium mb-1">Actions</h4>
-<div className="flex flex-col gap-2">
-<button onClick={water} className="px-3 py-2 rounded-md bg-sky-600 text-white">Water</button>
-<button onClick={()=>setGrowth(100)} className="px-3 py-2 rounded-md border">Full Bloom (demo)</button>
-<button onClick={()=>{navigator.clipboard?.writeText(JSON.stringify({growth, entries}))}} className="px-3 py-2 rounded-md">Copy JSON</button>
-</div>
-</div>
-
-
-<div className="mt-6 text-xs text-gray-500">
-Build notes: Add scheduled reminders, social sharing, multiple pots, badges for streaks, and server sync for multi-device.
-</div>
-</div>
-  </body>
+    <script>
+        // Filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const cameraCards = document.querySelectorAll('.camera-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    const filterValue = button.getAttribute('data-filter');
+                    
+                    cameraCards.forEach(card => {
+                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
 </html>
-
-
-</div>
-</div>
-);
-}
+    </body>
+</html>
